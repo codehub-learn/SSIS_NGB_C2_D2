@@ -11,23 +11,11 @@
   DTS:LocaleID="1032"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="17"
-  DTS:VersionGUID="{1D1593FB-1C70-44A7-97C9-EFDBE87D688B}">
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{52AE924E-4A14-428A-8DE2-CAA2981EC397}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{7EEF6AF3-359C-4FAE-9FC5-A5058C93754C}"
-      DTS:ObjectName="DESK.AdventureWorksDW2019 1">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESK;Initial Catalog=AdventureWorksDW2019;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{7EEF6AF3-359C-4FAE-9FC5-A5058C93754C}DESK.AdventureWorksDW2019 1;Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Sample Currency Data]"
       DTS:CreationName="FLATFILE"
@@ -49,7 +37,7 @@
               DTS:DataType="4"
               DTS:TextQualified="True"
               DTS:ObjectName="AverageRate"
-              DTS:DTSID="{DC0A72E1-E6BC-4B1D-9AD7-A77B12791BCD}"
+              DTS:DTSID="{1C3E519A-7562-4F6C-97FF-C4BB62EA255A}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -58,16 +46,15 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="CurrencyID"
-              DTS:DTSID="{8431594E-E5B1-4E46-8932-3B1A2F31EC89}"
+              DTS:DTSID="{FE610D0B-5165-4936-86BE-E21323290B18}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
               DTS:ColumnDelimiter="_x0009_"
-              DTS:MaximumWidth="50"
-              DTS:DataType="130"
+              DTS:DataType="135"
               DTS:TextQualified="True"
               DTS:ObjectName="CurrencyDate"
-              DTS:DTSID="{362AD0F8-BA67-4470-A5A5-2E75586F1BD3}"
+              DTS:DTSID="{D8BEB090-A0BE-4837-8B32-D2B18803B590}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -75,7 +62,7 @@
               DTS:DataType="4"
               DTS:TextQualified="True"
               DTS:ObjectName="EndOfDayRate"
-              DTS:DTSID="{AB08202E-16EB-4FDF-80AA-9D59DBA4A5E9}"
+              DTS:DTSID="{ADBE6A56-03F5-457A-823D-CC067EE8312B}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -172,11 +159,10 @@
                     </outputColumn>
                     <outputColumn
                       refId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[CurrencyDate]"
-                      dataType="wstr"
+                      dataType="dbTimeStamp"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[CurrencyDate]"
-                      length="50"
                       lineageId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[CurrencyDate]"
                       name="CurrencyDate"
                       truncationRowDisposition="FailComponent">
@@ -225,8 +211,7 @@
                       name="CurrencyID" />
                     <externalMetadataColumn
                       refId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[CurrencyDate]"
-                      dataType="wstr"
-                      length="50"
+                      dataType="dbTimeStamp"
                       name="CurrencyDate" />
                     <externalMetadataColumn
                       refId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[EndOfDayRate]"
@@ -333,8 +318,8 @@ where [refTable].[CurrencyAlternateKey] = ?</property>
               <connections>
                 <connection
                   refId="Package\Currency Data Flow\Lookup CurrencyKey.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
-                  connectionManagerRefId="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
+                  connectionManagerID="{7EEF6AF3-359C-4FAE-9FC5-A5058C93754C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -436,14 +421,16 @@ where [refTable].[CurrencyAlternateKey] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimDate]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DateKey, CAST(FullDateAlternateKey AS DATETIME) FullDateKey
+FROM DBO.DimDate;</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimDate]) [refTable]
-where [refTable].[FullDateAlternateKey] = ?</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT DateKey, CAST(FullDateAlternateKey AS DATETIME) FullDateKey
+FROM DBO.DimDate;) [refTable]
+where [refTable].[FullDateKey] = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."
@@ -474,7 +461,7 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullDateAlternateKey" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DayNumberOfWeek" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="EnglishDayNameOfWeek" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SpanishDayNameOfWeek" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FrenchDayNameOfWeek" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DayNumberOfMonth" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DayNumberOfYear" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="WeekNumberOfYear" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="EnglishMonthName" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SpanishMonthName" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FrenchMonthName" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MonthNumberOfYear" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CalendarQuarter" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CalendarYear" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CalendarSemester" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FiscalQuarter" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FiscalYear" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FiscalSemester" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullDateKey" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -492,8 +479,8 @@ where [refTable].[FullDateAlternateKey] = ?</property>
               <connections>
                 <connection
                   refId="Package\Currency Data Flow\Lookup Date.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
-                  connectionManagerRefId="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
+                  connectionManagerID="{7EEF6AF3-359C-4FAE-9FC5-A5058C93754C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -504,15 +491,14 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Currency Data Flow\Lookup Date.Inputs[Lookup Input].Columns[CurrencyDate]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedDataType="dbTimeStamp"
                       cachedName="CurrencyDate"
                       lineageId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[CurrencyDate]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Specifies the column in the reference table that a column joins."
-                          name="JoinToReferenceColumn">FullDateAlternateKey</property>
+                          name="JoinToReferenceColumn">FullDateKey</property>
                         <property
                           dataType="System.Null"
                           description="Specifies the column in the reference table from which a column is copied."
@@ -527,7 +513,7 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                 <output
                   refId="Package\Currency Data Flow\Lookup Date.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
-                  errorRowDisposition="IgnoreFailure"
+                  errorRowDisposition="FailComponent"
                   exclusionGroup="1"
                   name="Lookup Match Output"
                   synchronousInputId="Package\Currency Data Flow\Lookup Date.Inputs[Lookup Input]">
@@ -597,7 +583,7 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[NewFactCurrencyRate]</property>
+                  name="OpenRowset">[dbo].[NewFactCurrencyRate]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -640,8 +626,8 @@ where [refTable].[FullDateAlternateKey] = ?</property>
               <connections>
                 <connection
                   refId="Package\Currency Data Flow\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
-                  connectionManagerRefId="Package.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
+                  connectionManagerID="{7EEF6AF3-359C-4FAE-9FC5-A5058C93754C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESK.AdventureWorksDW2019 1]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -668,8 +654,7 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                       lineageId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[CurrencyID]" />
                     <inputColumn
                       refId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrencyDate]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedDataType="dbTimeStamp"
                       cachedName="CurrencyDate"
                       externalMetadataColumnId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrencyDate]"
                       lineageId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[CurrencyDate]" />
@@ -680,17 +665,17 @@ where [refTable].[FullDateAlternateKey] = ?</property>
                       externalMetadataColumnId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EndOfDayRate]"
                       lineageId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output].Columns[EndOfDayRate]" />
                     <inputColumn
-                      refId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKey]"
-                      cachedDataType="i4"
-                      cachedName="DateKey"
-                      externalMetadataColumnId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
-                      lineageId="Package\Currency Data Flow\Lookup Date.Outputs[Lookup Match Output].Columns[DateKey]" />
-                    <inputColumn
                       refId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrencyKey]"
                       cachedDataType="i4"
                       cachedName="CurrencyKey"
                       externalMetadataColumnId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrencyKey]"
                       lineageId="Package\Currency Data Flow\Lookup CurrencyKey.Outputs[Lookup Match Output].Columns[CurrencyKey]" />
+                    <inputColumn
+                      refId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      externalMetadataColumnId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      lineageId="Package\Currency Data Flow\Lookup Date.Outputs[Lookup Match Output].Columns[DateKey]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -756,14 +741,14 @@ where [refTable].[FullDateAlternateKey] = ?</property>
               startId="Package\Currency Data Flow\Flat File Source.Outputs[Flat File Source Output]" />
             <path
               refId="Package\Currency Data Flow.Paths[Lookup Match Output]"
-              endId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input]"
-              name="Lookup Match Output"
-              startId="Package\Currency Data Flow\Lookup CurrencyKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Currency Data Flow.Paths[Lookup Match Output1]"
               endId="Package\Currency Data Flow\Lookup CurrencyKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Currency Data Flow\Lookup Date.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Currency Data Flow.Paths[Lookup Match Output1]"
+              endId="Package\Currency Data Flow\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Currency Data Flow\Lookup CurrencyKey.Outputs[Lookup Match Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -800,53 +785,49 @@ where [refTable].[FullDateAlternateKey] = ?</property>
         <NodeLayout
           Size="175.2,41.6"
           Id="Package\Currency Data Flow\Lookup CurrencyKey"
-          TopLeft="137.142857434798,243.941176256764" />
+          TopLeft="127.857143129317,284.470587985945" />
         <NodeLayout
-          Size="170.4,41.6"
-          Id="Package\Currency Data Flow\OLE DB Destination"
-          TopLeft="138.571428866411,337.99999970373" />
+          Size="137.6,41.6"
+          Id="Package\Currency Data Flow\Lookup Date"
+          TopLeft="150.714286035117,168.235293970182" />
         <EdgeLayout
           Id="Package\Currency Data Flow.Paths[Lookup Match Output]"
-          TopLeft="224.257143150604,285.541176256764">
+          TopLeft="217.485714582217,209.835293970182">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,52.4588234469653"
+              EndConnector="0,74.6352940157628"
               Start="0,0"
-              End="0,44.9588234469653">
+              End="0,67.1352940157628">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,44.9588234469653" />
+                    End="0,67.1352940157628" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,16.6747242234827,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,27.7629595078814,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="137.6,41.6"
-          Id="Package\Currency Data Flow\Lookup Date"
-          TopLeft="155.714286045761,144.52941163802" />
         <EdgeLayout
           Id="Package\Currency Data Flow.Paths[Flat File Source Output]"
-          TopLeft="225.571428898342,99.7176470078811">
+          TopLeft="223.07142889302,99.7176470078811">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,44.8117646301392"
+              EndConnector="0,68.5176469623012"
               Start="0,0"
-              End="0,37.3117646301392">
+              End="0,61.0176469623012">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,37.3117646301392" />
+                    End="0,61.0176469623012" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -855,27 +836,31 @@ where [refTable].[FullDateAlternateKey] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Currency Data Flow\OLE DB Destination"
+          TopLeft="137.142857434798,414.470587871994" />
         <EdgeLayout
           Id="Package\Currency Data Flow.Paths[Lookup Match Output1]"
-          TopLeft="224.628571740279,186.12941163802">
+          TopLeft="218.900000282058,326.070587985945">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,57.811764618744"
+              EndConnector="0,88.3999998860494"
               Start="0,0"
-              End="0,50.311764618744">
+              End="0,80.8999998860494">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,50.311764618744" />
+                    End="0,80.8999998860494" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-57.0600390625,17.155882309372,114.120078125,16"
+              BoundingBox="-48.19138671875,34.6453124430247,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -884,6 +869,29 @@ where [refTable].[FullDateAlternateKey] = ?</property>
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Currency Data Flow\Lookup CurrencyKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Currency Data Flow\Lookup Date">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -915,29 +923,6 @@ where [refTable].[FullDateAlternateKey] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Currency Data Flow\Lookup Date">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DimDate]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
