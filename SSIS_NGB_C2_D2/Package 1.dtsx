@@ -1,25 +1,25 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="1/18/2024 9:14:38 AM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DESK"
   DTS:CreatorName="DESK\Stan"
-  DTS:DTSID="{26C0F4D2-705F-4D65-8D0F-38402E50E65A}"
+  DTS:DTSID="{A671E776-2F23-4C70-931A-1333830D43CA}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5314.0"
   DTS:LocaleID="1032"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="25"
-  DTS:VersionGUID="{52AE924E-4A14-428A-8DE2-CAA2981EC397}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{903097DB-EB20-4D2C-9984-E4B029B099CE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Sample Currency Data]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{21F4C21E-C463-405F-A8E4-5B9A69F601EF}"
+      DTS:DTSID="{124097E4-2FEE-45A5-9ADB-99E68DF76666}"
       DTS:ObjectName="Sample Currency Data">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -29,7 +29,7 @@
           DTS:RowDelimiter=""
           DTS:TextQualifier="_x003C_none_x003E_"
           DTS:CodePage="1252"
-          DTS:ConnectionString="C:\Users\Stan\Desktop\SampleCurrencyData.txt">
+          DTS:ConnectionString="C:\Users\Stan\Desktop\Creating a Simple ETL Package (6)\Creating a Simple ETL Package\Sample Data\SampleCurrencyData.txt">
           <DTS:FlatFileColumns>
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -37,7 +37,7 @@
               DTS:DataType="4"
               DTS:TextQualified="True"
               DTS:ObjectName="AverageRate"
-              DTS:DTSID="{1C3E519A-7562-4F6C-97FF-C4BB62EA255A}"
+              DTS:DTSID="{E0ED8670-5044-45EC-B290-7B0812D8589E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -46,7 +46,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="CurrencyID"
-              DTS:DTSID="{FE610D0B-5165-4936-86BE-E21323290B18}"
+              DTS:DTSID="{A3E77493-0B80-446A-BD20-FE3FF18FF1BD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -54,7 +54,7 @@
               DTS:DataType="135"
               DTS:TextQualified="True"
               DTS:ObjectName="CurrencyDate"
-              DTS:DTSID="{D8BEB090-A0BE-4837-8B32-D2B18803B590}"
+              DTS:DTSID="{8941FE56-80D7-4708-A39D-A0C1AEFDD8B2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -62,7 +62,7 @@
               DTS:DataType="4"
               DTS:TextQualified="True"
               DTS:ObjectName="EndOfDayRate"
-              DTS:DTSID="{ADBE6A56-03F5-457A-823D-CC067EE8312B}"
+              DTS:DTSID="{C4BB0D9D-0FF8-4009-8C46-A4DE1AC7F1C8}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -75,7 +75,7 @@
       DTS:refId="Package\Currency Data Flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{04B2B8B9-2A6C-4139-A9FE-EFF539071EC7}"
+      DTS:DTSID="{5786A435-B5E1-41DB-A5B9-F9A001B1FA59}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Currency Data Flow"
@@ -779,10 +779,6 @@ where [refTable].[FullDateKey] = ?</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="150.4,41.6"
-          Id="Package\Currency Data Flow\Flat File Source"
-          TopLeft="151.428571750923,58.1176470078811" />
-        <NodeLayout
           Size="175.2,41.6"
           Id="Package\Currency Data Flow\Lookup CurrencyKey"
           TopLeft="127.857143129317,284.470587985945" />
@@ -790,6 +786,38 @@ where [refTable].[FullDateKey] = ?</property>
           Size="137.6,41.6"
           Id="Package\Currency Data Flow\Lookup Date"
           TopLeft="150.714286035117,168.235293970182" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Currency Data Flow\Flat File Source"
+          TopLeft="151.428571750923,58.1176470078811" />
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Currency Data Flow\OLE DB Destination"
+          TopLeft="137.142857434798,414.470587871994" />
+        <EdgeLayout
+          Id="Package\Currency Data Flow.Paths[Lookup Match Output1]"
+          TopLeft="218.900000282058,326.070587985945">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,88.3999998860494"
+              Start="0,0"
+              End="0,80.8999998860494">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.8999998860494" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,34.6453124430247,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Currency Data Flow.Paths[Lookup Match Output]"
           TopLeft="217.485714582217,209.835293970182">
@@ -836,34 +864,6 @@ where [refTable].[FullDateKey] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="170.4,41.6"
-          Id="Package\Currency Data Flow\OLE DB Destination"
-          TopLeft="137.142857434798,414.470587871994" />
-        <EdgeLayout
-          Id="Package\Currency Data Flow.Paths[Lookup Match Output1]"
-          TopLeft="218.900000282058,326.070587985945">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,88.3999998860494"
-              Start="0,0"
-              End="0,80.8999998860494">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,80.8999998860494" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,34.6453124430247,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -873,7 +873,7 @@ where [refTable].[FullDateKey] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -883,7 +883,7 @@ where [refTable].[FullDateKey] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -896,7 +896,7 @@ where [refTable].[FullDateKey] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -906,7 +906,7 @@ where [refTable].[FullDateKey] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
